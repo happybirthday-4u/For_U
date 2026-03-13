@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday, Mental 🥹</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Dancing+Script:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --rose: #e8637a;
+    --blush: #f7c5ce;
+    --cream: #fdf6f0;
+    --deep: #2a1a1f;
+    --gold: #c9954a;
+    --soft: #f9e8ec;
+    --petal: #f2a0b0;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--cream);
+    color: var(--deep);
+    font-family: 'Cormorant Garamond', serif;
+    overflow-x: hidden;
+    cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Ctext y='20' font-size='18'%3E🌸%3C/text%3E%3C/svg%3E") 12 12, auto;
+  }
+
+  /* ─── FLOATING PETALS ─── */
+  .petals-bg {
+    position: fixed; inset: 0; pointer-events: none; z-index: 0;
+    overflow: hidden;
+  }
+  .petal {
+    position: absolute;
+    font-size: 1.4rem;
+    opacity: 0;
+    animation: fallPetal linear infinite;
+  }
+  @keyframes fallPetal {
+    0%   { transform: translateY(-60px) rotate(0deg) translateX(0); opacity: 0; }
+    10%  { opacity: 0.7; }
+    90%  { opacity: 0.4; }
+    100% { transform: translateY(110vh) rotate(720deg) translateX(60px); opacity: 0; }
+  }
+
+  /* ─── HERO ─── */
+  #hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex; align-items: center; justify-content: center;
+    background: linear-gradient(160deg, #fff0f3 0%, #fce4ec 40%, #fdf6f0 100%);
+    overflow: hidden;
+    z-index: 1;
+  }
+
+  .hero-deco {
+    position: absolute;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(232,99,122,0.18), transparent 70%);
+    pointer-events: none;
+  }
+  .hero-deco.d1 { width: 600px; height: 600px; top: -150px; left: -200px; }
+  .hero-deco.d2 { width: 400px; height: 400px; bottom: -100px; right: -100px; background: radial-gradient(circle, rgba(201,149,74,0.12), transparent 70%); }
+
+  .hero-inner {
+    text-align: center;
+    position: relative;
+    z-index: 2;
+    padding: 60px 30px;
+    animation: heroFadeIn 1.4s ease both;
+  }
+  @keyframes heroFadeIn {
+    from { opacity: 0; transform: translateY(30px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .hero-tag {
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.3rem;
+    color: var(--rose);
+    letter-spacing: 2px;
+    display: block;
+    margin-bottom: 12px;
+    animation: heroFadeIn 1.4s 0.2s ease both;
+    opacity: 0;
+  }
+
+  .hero-name {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3.5rem, 10vw, 8rem);
+    font-weight: 700;
+    line-height: 1.05;
+    color: var(--deep);
+    letter-spacing: -2px;
+    animation: heroFadeIn 1.4s 0.4s ease both;
+    opacity: 0;
+  }
+  .hero-name span { color: var(--rose); font-style: italic; }
+
+  .hero-sub {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.1rem, 3vw, 1.6rem);
+    font-weight: 300;
+    font-style: italic;
+    color: #a06070;
+    margin-top: 18px;
+    animation: heroFadeIn 1.4s 0.6s ease both;
+    opacity: 0;
+  }
+
+  .hero-date {
+    margin-top: 36px;
+    display: inline-block;
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.5rem;
+    color: var(--gold);
+    border: 1.5px solid var(--gold);
+    padding: 10px 30px;
+    border-radius: 50px;
+    animation: heroFadeIn 1.4s 0.8s ease both;
+    opacity: 0;
+  }
+
+  .hearts-row {
+    margin-top: 40px;
+    font-size: 2rem;
+    letter-spacing: 6px;
+    animation: heroFadeIn 1.4s 1s ease both;
+    opacity: 0;
+  }
+
+  .scroll-hint {
+    position: absolute;
+    bottom: 36px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.9rem;
+    color: #c09;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    animation: bounce 2s infinite 2s;
+    opacity: 0;
+  }
+  @keyframes bounce {
+    0%,100% { transform: translateX(-50%) translateY(0); opacity: 0.7; }
+    50%      { transform: translateX(-50%) translateY(10px); opacity: 1; }
+  }
+
+  /* ─── SECTIONS SHARED ─── */
+  section {
+    position: relative; z-index: 1;
+    padding: 90px 24px;
+  }
+  .section-inner { max-width: 900px; margin: 0 auto; }
+
+  .section-label {
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.1rem;
+    color: var(--rose);
+    letter-spacing: 3px;
+    display: block;
+    margin-bottom: 8px;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 5vw, 3.4rem);
+    font-weight: 700;
+    line-height: 1.15;
+    color: var(--deep);
+    margin-bottom: 28px;
+  }
+  .section-title em { color: var(--rose); font-style: italic; }
+
+  .divider {
+    width: 60px; height: 2px;
+    background: linear-gradient(90deg, var(--rose), var(--gold));
+    border-radius: 2px;
+    margin: 0 auto 36px;
+  }
+
+  /* ─── MESSAGE SECTION ─── */
+  #message {
+    background: linear-gradient(135deg, #fff5f7 0%, #fdf6f0 100%);
+  }
+  #message .section-inner { text-align: center; }
+
+  .letter-box {
+    background: #fff;
+    border: 1px solid var(--blush);
+    border-radius: 24px;
+    padding: 48px 44px;
+    box-shadow: 0 12px 50px rgba(232,99,122,0.08);
+    position: relative;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+  .letter-box::before {
+    content: '❝';
+    position: absolute;
+    top: -20px; left: 32px;
+    font-size: 5rem;
+    color: var(--blush);
+    font-family: serif;
+    line-height: 1;
+  }
+  .letter-box p {
+    font-size: 1.22rem;
+    line-height: 1.9;
+    font-weight: 300;
+    color: #5a3040;
+    text-align: left;
+  }
+  .letter-box p + p { margin-top: 18px; }
+  .letter-box .sign {
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.6rem;
+    color: var(--rose);
+    text-align: right;
+    margin-top: 28px;
+    display: block;
+  }
+
+  /* ─── WHY I LOVE YOU ─── */
+  #reasons {
+    background: var(--cream);
+  }
+  #reasons .section-inner { text-align: center; }
+
+  .reasons-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 20px;
+    margin-top: 12px;
+  }
+  .reason-card {
+    background: #fff;
+    border-radius: 20px;
+    padding: 32px 24px;
+    border: 1px solid #f5dde4;
+    box-shadow: 0 4px 20px rgba(232,99,122,0.06);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    text-align: left;
+  }
+  .reason-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 16px 40px rgba(232,99,122,0.14);
+  }
+  .reason-icon { font-size: 2.4rem; margin-bottom: 14px; display: block; }
+  .reason-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--deep);
+    margin-bottom: 8px;
+  }
+  .reason-card p {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: #7a5060;
+    font-weight: 300;
+  }
+
+  /* ─── GALLERY ─── */
+  #gallery {
+    background: linear-gradient(160deg, #2a1a1f 0%, #3d1f28 100%);
+    color: #fdf6f0;
+  }
+  #gallery .section-label { color: #f7c5ce; }
+  #gallery .section-title { color: #fdf6f0; }
+  #gallery .section-title em { color: var(--petal); }
+
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: auto;
+    gap: 14px;
+  }
+  .gallery-item {
+    border-radius: 16px;
+    overflow: hidden;
+    position: relative;
+    aspect-ratio: 1;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(247,197,206,0.2);
+    cursor: pointer;
+    transition: transform 0.35s ease;
+  }
+  .gallery-item:hover { transform: scale(1.03); }
+  .gallery-item:nth-child(1) { grid-column: span 2; aspect-ratio: 2/1; }
+  .gallery-item:nth-child(4) { grid-column: span 2; aspect-ratio: 2/1; }
+
+  .gallery-item img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.5s ease;
+  }
+  .gallery-item:hover img { transform: scale(1.08); }
+
+  .gallery-item .overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(42,26,31,0.85) 0%, transparent 60%);
+    display: flex; align-items: flex-end;
+    padding: 18px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  .gallery-item:hover .overlay { opacity: 1; }
+  .overlay span {
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.1rem;
+    color: #f7c5ce;
+  }
+
+  .gallery-placeholder {
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    width: 100%; height: 100%;
+    color: rgba(247,197,206,0.5);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.9rem;
+    font-style: italic;
+    gap: 10px;
+    padding: 20px;
+    text-align: center;
+    min-height: 160px;
+  }
+  .gallery-placeholder .ph-icon { font-size: 2.5rem; opacity: 0.4; }
+
+  /* ─── TIMELINE ─── */
+  #timeline {
+    background: #fff8f9;
+  }
+  #timeline .section-inner { text-align: center; }
+
+  .timeline {
+    position: relative;
+    max-width: 640px;
+    margin: 0 auto;
+    padding-top: 20px;
+  }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 50%; transform: translateX(-50%);
+    top: 0; bottom: 0;
+    width: 2px;
+    background: linear-gradient(to bottom, var(--rose), var(--gold));
+    border-radius: 2px;
+  }
+  .tl-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 30px;
+    margin-bottom: 44px;
+    position: relative;
+  }
+  .tl-item:nth-child(odd) { flex-direction: row-reverse; text-align: right; }
+  .tl-item:nth-child(odd) .tl-content { align-items: flex-end; }
+
+  .tl-dot {
+    position: absolute;
+    left: 50%; top: 8px;
+    transform: translateX(-50%);
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    background: var(--rose);
+    border: 3px solid white;
+    box-shadow: 0 0 0 3px var(--blush);
+    z-index: 2;
+    flex-shrink: 0;
+  }
+
+  .tl-content {
+    flex: 1;
+    display: flex; flex-direction: column;
+    padding: 0 48px 0 0;
+  }
+  .tl-item:nth-child(odd) .tl-content { padding: 0 0 0 48px; }
+
+  .tl-date {
+    font-family: 'Dancing Script', cursive;
+    font-size: 1rem;
+    color: var(--gold);
+    margin-bottom: 6px;
+  }
+  .tl-content h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--deep);
+    margin-bottom: 6px;
+  }
+  .tl-content p {
+    font-size: 0.97rem;
+    line-height: 1.7;
+    color: #7a5060;
+    font-weight: 300;
+  }
+
+  /* ─── DOCTOR SECTION ─── */
+  #doctor {
+    background: linear-gradient(135deg, #f0faf5 0%, #fdf6f0 100%);
+    text-align: center;
+  }
+  .doctor-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 16px;
+    background: white;
+    border: 1px solid #c5e8d5;
+    border-radius: 100px;
+    padding: 18px 36px;
+    margin-bottom: 36px;
+    box-shadow: 0 4px 20px rgba(100,190,130,0.1);
+  }
+  .doctor-badge .icon { font-size: 2.4rem; }
+  .doctor-badge div {
+    text-align: left;
+    font-family: 'Playfair Display', serif;
+  }
+  .doctor-badge .title {
+    font-size: 1.3rem; font-weight: 700; color: #2d6a4f;
+  }
+  .doctor-badge .sub { font-size: 0.9rem; color: #74a98a; font-style: italic; }
+
+  .doctor-msg {
+    max-width: 600px;
+    margin: 0 auto;
+    font-size: 1.15rem;
+    line-height: 1.85;
+    color: #4a6358;
+    font-weight: 300;
+  }
+
+  /* ─── WISH SECTION ─── */
+  #wish {
+    background: linear-gradient(160deg, #2a1a1f 0%, #1a0d12 100%);
+    text-align: center;
+    overflow: hidden;
+  }
+  #wish .section-label { color: #f7c5ce; }
+
+  .wish-big {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.2rem, 7vw, 5.5rem);
+    font-weight: 700;
+    color: #fdf6f0;
+    line-height: 1.1;
+    margin-bottom: 24px;
+  }
+  .wish-big em { color: var(--petal); font-style: italic; }
+
+  .wish-msg {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.3rem;
+    font-weight: 300;
+    font-style: italic;
+    color: #c09090;
+    max-width: 540px;
+    margin: 0 auto 48px;
+    line-height: 1.8;
+  }
+
+  .candle-row { font-size: 2.8rem; letter-spacing: 4px; margin-bottom: 32px; animation: flicker 1.5s infinite alternate; }
+  @keyframes flicker {
+    from { filter: brightness(1); }
+    to   { filter: brightness(1.3) drop-shadow(0 0 8px #ffd580); }
+  }
+
+  .from-gann {
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.8rem;
+    color: var(--rose);
+    letter-spacing: 1px;
+  }
+
+  /* ─── LIGHTBOX ─── */
+  #lightbox {
+    display: none;
+    position: fixed; inset: 0;
+    background: rgba(20,10,14,0.95);
+    z-index: 1000;
+    align-items: center; justify-content: center;
+    padding: 20px;
+  }
+  #lightbox.open { display: flex; }
+  #lightbox img {
+    max-width: 90vw; max-height: 85vh;
+    border-radius: 12px;
+    object-fit: contain;
+    box-shadow: 0 20px 80px rgba(0,0,0,0.6);
+  }
+  #lightbox-close {
+    position: fixed; top: 20px; right: 28px;
+    font-size: 2.5rem; color: #fff; cursor: pointer;
+    line-height: 1;
+    opacity: 0.7; transition: opacity 0.2s;
+  }
+  #lightbox-close:hover { opacity: 1; }
+
+  /* ─── SCROLL REVEAL ─── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  @media (max-width: 600px) {
+    .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+    .gallery-item:nth-child(1),
+    .gallery-item:nth-child(4) { grid-column: span 2; }
+    .letter-box { padding: 32px 22px; }
+    .timeline::before { left: 18px; }
+    .tl-item, .tl-item:nth-child(odd) { flex-direction: column; text-align: left; padding-left: 50px; }
+    .tl-item:nth-child(odd) .tl-content { align-items: flex-start; padding: 0; }
+    .tl-content { padding: 0; }
+    .tl-dot { left: 18px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Floating Petals -->
+<div class="petals-bg" id="petals"></div>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-deco d1"></div>
+  <div class="hero-deco d2"></div>
+  <div class="hero-inner">
+    <span class="hero-tag">✦ A Special Day For A Special Soul ✦</span>
+    <h1 class="hero-name">
+      Happy Birthday,<br><span>Mental</span> 🥹
+    </h1>
+    <p class="hero-sub">Also known as my favourite Doctor-in-the-making — Arati 💗</p>
+    <div class="hero-date">🌸 17 March 🌸</div>
+    <div class="hearts-row">🌺 💖 🌸 💕 🌺</div>
+  </div>
+  <div class="scroll-hint">scroll down ↓</div>
+</section>
+
+<!-- MESSAGE -->
+<section id="message">
+  <div class="section-inner">
+    <span class="section-label reveal">✦ From Gann's Heart ✦</span>
+    <h2 class="section-title reveal">A letter for <em>you</em></h2>
+    <div class="divider reveal"></div>
+    <div class="letter-box reveal">
+      <p>Hey Mental, 🥺</p>
+      <p>First of all — Happy Birthday, my favourite crazy person in the whole world. I call you "Mental" not because you're weird (okay, maybe a little 😄), but because you are absolutely, completely, wonderfully mental for me. The best kind.</p>
+      <p>You're learning to heal people every single day — studying BAMS, dedicating yourself, putting in all that effort — and honestly? Watching you do that makes me fall for you a little more every time. You're going to be the most caring, wonderful doctor someday soon, and your patients are going to be so lucky to have you.</p>
+      <p>I made this little page because I wanted you to know — someone out there is noticing every single thing about you. Your smile, your hard work, your madness, your heart. Today is YOUR day. Be happy. Be you. You deserve every good thing this world has to offer.</p>
+      <p>I love you, Baby. Always. 🫂</p>
+      <span class="sign">— Your Gann 💖</span>
+    </div>
+  </div>
+</section>
+
+<!-- REASONS -->
+<section id="reasons">
+  <div class="section-inner">
+    <span class="section-label reveal">✦ Things I adore about you ✦</span>
+    <h2 class="section-title reveal" style="text-align:center">Why you're <em>my everything</em></h2>
+    <div class="divider reveal"></div>
+    <div class="reasons-grid">
+      <div class="reason-card reveal">
+        <span class="reason-icon">🩺</span>
+        <h3>Your Dedication</h3>
+        <p>Studying BAMS is no joke — and you do it with so much heart. You're going to heal so many people someday, Doctor.</p>
+      </div>
+      <div class="reason-card reveal">
+        <span class="reason-icon">😂</span>
+        <h3>Your Beautiful Madness</h3>
+        <p>You're "Mental" in the most wonderful way. Life is never boring with you around — you make every moment alive.</p>
+      </div>
+      <div class="reason-card reveal">
+        <span class="reason-icon">💗</span>
+        <h3>Your Caring Soul</h3>
+        <p>The way you care — for people, for studies, for the ones you love — it's the most beautiful thing about you.</p>
+      </div>
+      <div class="reason-card reveal">
+        <span class="reason-icon">🌸</span>
+        <h3>Your Smile</h3>
+        <p>There are entire universes in your smile. It's the thing I think about when I need to feel okay.</p>
+      </div>
+      <div class="reason-card reveal">
+        <span class="reason-icon">💪</span>
+        <h3>Your Strength</h3>
+        <p>You carry so much with such grace. You don't always show how hard things are, but I see you — and I'm so proud.</p>
+      </div>
+      <div class="reason-card reveal">
+        <span class="reason-icon">🫂</span>
+        <h3>The Way You Love</h3>
+        <p>Being called "baby" by you? It hits different every single time. You make love feel the safest thing in the world.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section id="gallery">
+  <div class="section-inner">
+    <span class="section-label reveal">✦ Our Moments ✦</span>
+    <h2 class="section-title reveal">A gallery of <em>us</em></h2>
+    <div class="divider" style="background:linear-gradient(90deg,#f7c5ce,#c9954a); margin-bottom: 36px;"></div>
+    <div class="gallery-grid reveal">
+      <!-- Update these src URLs with real photo URLs later -->
+      <div class="gallery-item" onclick="openLightbox(this)">
+        <div class="gallery-placeholder">
+          <span class="ph-icon">📸</span>
+          <span>Your favourite photo of us goes here</span>
+        </div>
+        <img src="" alt="Memory 1" style="display:none" data-caption="Our best moment 💕">
+        <div class="overlay"><span>Our best moment 💕</span></div>
+      </div>
+      <div class="gallery-item" onclick="openLightbox(this)">
+        <div class="gallery-placeholder">
+          <span class="ph-icon">🌸</span>
+          <span>A sweet memory</span>
+        </div>
+        <img src="" alt="Memory 2" style="display:none" data-caption="You, glowing 🌸">
+        <div class="overlay"><span>You, glowing 🌸</span></div>
+      </div>
+      <div class="gallery-item" onclick="openLightbox(this)">
+        <div class="gallery-placeholder">
+          <span class="ph-icon">💖</span>
+          <span>A special day</span>
+        </div>
+        <img src="" alt="Memory 3" style="display:none" data-caption="Pure happiness 💖">
+        <div class="overlay"><span>Pure happiness 💖</span></div>
+      </div>
+      <div class="gallery-item" onclick="openLightbox(this)">
+        <div class="gallery-placeholder">
+          <span class="ph-icon">🥹</span>
+          <span>The one that makes me smile</span>
+        </div>
+        <img src="" alt="Memory 4" style="display:none" data-caption="This one makes me smile 🥹">
+        <div class="overlay"><span>This one makes me smile 🥹</span></div>
+      </div>
+      <div class="gallery-item" onclick="openLightbox(this)">
+        <div class="gallery-placeholder">
+          <span class="ph-icon">✨</span>
+          <span>A magical memory</span>
+        </div>
+        <img src="" alt="Memory 5" style="display:none" data-caption="Magic ✨">
+        <div class="overlay"><span>Magic ✨</span></div>
+      </div>
+      <div class="gallery-item" onclick="openLightbox(this)">
+        <div class="gallery-placeholder">
+          <span class="ph-icon">🌺</span>
+          <span>You being you</span>
+        </div>
+        <img src="" alt="Memory 6" style="display:none" data-caption="You being you 🌺">
+        <div class="overlay"><span>You being you 🌺</span></div>
+      </div>
+    </div>
+    <p style="text-align:center; margin-top:28px; color: rgba(247,197,206,0.5); font-style:italic; font-size:0.95rem;">
+      ✦ Gann will fill this with all our moments soon 🥹 ✦
+    </p>
+  </div>
+</section>
+
+<!-- DOCTOR -->
+<section id="doctor">
+  <div class="section-inner">
+    <span class="section-label reveal">✦ My Favourite Doctor ✦</span>
+    <h2 class="section-title reveal">Dr. <em>Arati</em> 🩺</h2>
+    <div class="divider reveal"></div>
+    <div class="reveal">
+      <div class="doctor-badge">
+        <span class="icon">🩺</span>
+        <div>
+          <div class="title">BAMS Scholar</div>
+          <div class="sub">Healing hearts, one step at a time</div>
+        </div>
+      </div>
+    </div>
+    <p class="doctor-msg reveal">
+      You chose the path of healing — and honestly, I'm not surprised. Because even before you become a doctor officially, you've been healing people just by being you. Your patience, your warmth, your stubbornness to understand things — those are exactly what a great doctor is made of. The day you put on that white coat? I'll be your proudest fan. 💚
+    </p>
+  </div>
+</section>
+
+<!-- TIMELINE -->
+<section id="timeline">
+  <div class="section-inner">
+    <span class="section-label reveal">✦ Our Little Story ✦</span>
+    <h2 class="section-title reveal">Moments I <em>treasure</em></h2>
+    <div class="divider reveal"></div>
+    <div class="timeline reveal">
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-content">
+          <span class="tl-date">The Beginning ✨</span>
+          <h3>The day I found you</h3>
+          <p>And my world quietly became a little warmer, a little brighter, a little more mental — in the best way.</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-content">
+          <span class="tl-date">Every Day After 🌸</span>
+          <h3>Learning you</h3>
+          <p>The laughs, the fights, the long talks, the silences — every single one has been a page of my favourite story.</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-content">
+          <span class="tl-date">17 March 🎂</span>
+          <h3>Today — Your Day</h3>
+          <p>A whole celebration for the most beautiful, most mental, most wonderful person I know. You deserve this and so much more.</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-content">
+          <span class="tl-date">The Future 🌺</span>
+          <h3>Everything ahead</h3>
+          <p>I can't wait for all the chapters we haven't written yet — with Dr. Arati and her Gann, always. 🥹</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WISH -->
+<section id="wish">
+  <div class="section-inner">
+    <span class="section-label reveal">✦ With all my heart ✦</span>
+    <div class="candle-row reveal">🕯️🎂🕯️</div>
+    <div class="wish-big reveal">
+      Happy Birthday,<br><em>my Mental 🥹</em>
+    </div>
+    <p class="wish-msg reveal">
+      May this year bring you joy, laughter, good health, and all the success your beautiful heart deserves. Smile big today — because you made someone's whole world smile just by existing.
+    </p>
+    <p class="from-gann reveal">With love, always — your Gann 💖</p>
+  </div>
+</section>
+
+<!-- LIGHTBOX -->
+<div id="lightbox" onclick="closeLightbox()">
+  <span id="lightbox-close" onclick="closeLightbox()">✕</span>
+  <img id="lightbox-img" src="" alt="">
+</div>
+
+<script>
+  // ─── PETALS ───
+  const emojis = ['🌸','🌺','🌹','💮','🌷','💗','🌸','🌺'];
+  const petalsEl = document.getElementById('petals');
+  for(let i = 0; i < 28; i++){
+    const p = document.createElement('div');
+    p.className = 'petal';
+    p.textContent = emojis[Math.floor(Math.random()*emojis.length)];
+    p.style.left = Math.random()*100 + 'vw';
+    p.style.fontSize = (1 + Math.random()*1.2) + 'rem';
+    p.style.animationDuration = (8 + Math.random()*14) + 's';
+    p.style.animationDelay = (Math.random()*20) + 's';
+    p.style.opacity = 0;
+    petalsEl.appendChild(p);
+  }
+
+  // ─── SCROLL REVEAL ───
+  const reveals = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if(e.isIntersecting) e.target.classList.add('visible');
+    });
+  }, { threshold: 0.12 });
+  reveals.forEach(r => io.observe(r));
+
+  // ─── GALLERY: show real images if src is set ───
+  document.querySelectorAll('.gallery-item').forEach(item => {
+    const img = item.querySelector('img');
+    const ph  = item.querySelector('.gallery-placeholder');
+    if(img && img.src && img.src !== window.location.href) {
+      img.style.display = 'block';
+      if(ph) ph.style.display = 'none';
+    }
+  });
+
+  // ─── LIGHTBOX ───
+  function openLightbox(item) {
+    const img = item.querySelector('img');
+    if(!img || !img.src || img.style.display === 'none') return;
+    document.getElementById('lightbox-img').src = img.src;
+    document.getElementById('lightbox').classList.add('open');
+  }
+  function closeLightbox() {
+    document.getElementById('lightbox').classList.remove('open');
+  }
+  document.addEventListener('keydown', e => { if(e.key === 'Escape') closeLightbox(); });
+</script>
+</body>
+</html>
