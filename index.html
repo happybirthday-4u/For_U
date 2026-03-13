@@ -55,15 +55,20 @@
     overflow: hidden;
     z-index: 1;
   }
-
-  .hero-deco {
-    position: absolute;
-    border-radius: 50%;
-    background: radial-gradient(circle, rgba(232,99,122,0.18), transparent 70%);
-    pointer-events: none;
+  #hero::before {
+    content:''; position: absolute; inset: 0; pointer-events: none;
+    background:
+      radial-gradient(ellipse 80% 60% at 15% 10%, rgba(232,99,122,0.25) 0%, transparent 65%),
+      radial-gradient(ellipse 60% 70% at 85% 90%, rgba(201,149,74,0.18) 0%, transparent 65%),
+      radial-gradient(ellipse 50% 50% at 55% 45%, rgba(247,197,206,0.12) 0%, transparent 65%);
+    animation: heroAurora 12s ease-in-out infinite alternate;
   }
-  .hero-deco.d1 { width: 600px; height: 600px; top: -150px; left: -200px; }
-  .hero-deco.d2 { width: 400px; height: 400px; bottom: -100px; right: -100px; background: radial-gradient(circle, rgba(201,149,74,0.12), transparent 70%); }
+  @keyframes heroAurora {
+    0%  { transform: scale(1) translate(0,0); opacity: 0.8; }
+    100%{ transform: scale(1.08) translate(20px,10px); opacity: 1; }
+  }
+
+  .hero-deco { display: none; }
 
   .hero-inner {
     text-align: center;
@@ -184,9 +189,17 @@
 
   /* ─── MESSAGE SECTION ─── */
   #message {
-    background: linear-gradient(135deg, #fff5f7 0%, #fdf6f0 100%);
+    background: linear-gradient(150deg, #fff5f7 0%, #fef0f3 50%, #fdf6f0 100%);
+    position: relative; overflow: hidden;
   }
-  #message .section-inner { text-align: center; }
+  #message::after {
+    content: ''; position: absolute; inset: 0; pointer-events: none;
+    background: radial-gradient(ellipse 70% 60% at 80% 20%, rgba(232,99,122,0.08) 0%, transparent 70%),
+                radial-gradient(ellipse 50% 50% at 10% 80%, rgba(201,149,74,0.06) 0%, transparent 70%);
+    animation: msgGlow 10s ease-in-out infinite alternate;
+  }
+  @keyframes msgGlow { 0%{opacity:0.6} 100%{opacity:1} }
+  #message .section-inner { text-align: center; position: relative; z-index: 1; }
 
   .letter-box {
     background: #fff;
@@ -266,9 +279,18 @@
 
   /* ─── GALLERY ─── */
   #gallery {
-    background: linear-gradient(160deg, #2a1a1f 0%, #3d1f28 100%);
+    background: linear-gradient(160deg, #1c0a14 0%, #2e1020 40%, #1a0c18 100%);
     color: #fdf6f0;
+    position: relative; overflow: hidden;
   }
+  #gallery::before {
+    content: ''; position: absolute; inset: 0; pointer-events: none;
+    background: radial-gradient(ellipse 70% 55% at 20% 30%, rgba(232,99,122,0.15) 0%, transparent 65%),
+                radial-gradient(ellipse 55% 65% at 80% 70%, rgba(201,149,74,0.12) 0%, transparent 65%);
+    animation: galleryPulse 9s ease-in-out infinite alternate;
+  }
+  @keyframes galleryPulse { 0%{opacity:0.6;transform:scale(1)} 100%{opacity:1;transform:scale(1.05)} }
+  #gallery .section-inner { position: relative; z-index: 1; }
   #gallery .section-label { color: #f7c5ce; }
   #gallery .section-title { color: #fdf6f0; }
   #gallery .section-title em { color: var(--petal); }
@@ -333,8 +355,15 @@
 
   /* ─── TIMELINE ─── */
   #timeline {
-    background: #fff8f9;
+    background: linear-gradient(160deg, #fff5f7 0%, #fff8f9 50%, #fdf6f0 100%);
+    position: relative; overflow: hidden;
   }
+  #timeline::before {
+    content: ''; position: absolute; inset: 0; pointer-events: none;
+    background: radial-gradient(ellipse 60% 50% at 5% 50%, rgba(232,99,122,0.07) 0%, transparent 70%),
+                radial-gradient(ellipse 50% 50% at 95% 50%, rgba(201,149,74,0.06) 0%, transparent 70%);
+  }
+  #timeline .section-inner { position: relative; z-index: 1; }
   #timeline .section-inner { text-align: center; }
 
   .timeline {
@@ -404,9 +433,16 @@
 
   /* ─── DOCTOR SECTION ─── */
   #doctor {
-    background: linear-gradient(135deg, #f0faf5 0%, #fdf6f0 100%);
-    text-align: center;
+    background: linear-gradient(135deg, #eaf7f1 0%, #f5fdf8 40%, #fdf6f0 100%);
+    text-align: center; position: relative; overflow: hidden;
   }
+  #doctor::before {
+    content: ''; position: absolute; inset: 0; pointer-events: none;
+    background: radial-gradient(ellipse 70% 60% at 80% 20%, rgba(80,200,130,0.10) 0%, transparent 70%),
+                radial-gradient(ellipse 50% 50% at 10% 80%, rgba(201,149,74,0.07) 0%, transparent 70%);
+    animation: msgGlow 11s ease-in-out infinite alternate;
+  }
+  #doctor .section-inner { position: relative; z-index: 1; }
   .doctor-badge {
     display: inline-flex;
     align-items: center;
@@ -439,25 +475,32 @@
 
   /* ─── WISH SECTION ─── */
   #wish {
-    background: linear-gradient(160deg, #2a1a1f 0%, #1a0d12 100%);
+    background: linear-gradient(135deg, #1a0820 0%, #2d0a28 40%, #1a0d12 100%);
     text-align: center;
     overflow: hidden;
+    position: relative;
   }
-  #wish .section-label { color: #f7c5ce; }
+  #wish-canvas {
+    position: absolute; inset: 0; width: 100%; height: 100%;
+    pointer-events: none; opacity: 0.55;
+  }
+  #wish .section-label { color: #f7c5ce; position: relative; z-index: 2; }
+  #wish .section-inner { position: relative; z-index: 2; }
 
   .wish-big {
     font-family: 'Playfair Display', serif;
-    font-size: clamp(2.2rem, 7vw, 5.5rem);
+    font-size: clamp(1.9rem, 5.5vw, 4rem);
     font-weight: 700;
     color: #fdf6f0;
-    line-height: 1.1;
+    line-height: 1.2;
     margin-bottom: 24px;
+    text-shadow: 0 0 40px rgba(232,99,122,0.35);
   }
   .wish-big em { color: var(--petal); font-style: italic; }
 
   .wish-msg {
     font-family: 'Cormorant Garamond', serif;
-    font-size: 1.3rem;
+    font-size: 1.2rem;
     font-weight: 300;
     font-style: italic;
     color: #c09090;
@@ -466,7 +509,7 @@
     line-height: 1.8;
   }
 
-  .candle-row { font-size: 2.8rem; letter-spacing: 4px; margin-bottom: 32px; animation: flicker 1.5s infinite alternate; }
+  .candle-row { font-size: 2.4rem; letter-spacing: 4px; margin-bottom: 28px; animation: flicker 1.5s infinite alternate; }
   @keyframes flicker {
     from { filter: brightness(1); }
     to   { filter: brightness(1.3) drop-shadow(0 0 8px #ffd580); }
@@ -474,7 +517,7 @@
 
   .from-gann {
     font-family: 'Dancing Script', cursive;
-    font-size: 1.8rem;
+    font-size: 1.6rem;
     color: var(--rose);
     letter-spacing: 1px;
   }
@@ -514,6 +557,130 @@
     transform: translateY(0);
   }
 
+  /* ─── MUSIC BUTTON ─── */
+  #musicBtn {
+    position: fixed;
+    bottom: 28px;
+    right: 28px;
+    z-index: 999;
+    width: 54px; height: 54px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--rose), var(--gold));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.5rem;
+    cursor: pointer;
+    box-shadow: 0 6px 24px rgba(232,99,122,0.45);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    user-select: none;
+    animation: musicPulse 2s infinite;
+  }
+  #musicBtn:hover {
+    transform: scale(1.12);
+    box-shadow: 0 10px 32px rgba(232,99,122,0.6);
+  }
+  @keyframes musicPulse {
+    0%,100% { box-shadow: 0 6px 24px rgba(232,99,122,0.45); }
+    50%      { box-shadow: 0 6px 32px rgba(232,99,122,0.75), 0 0 0 8px rgba(232,99,122,0.12); }
+  }
+  #musicBtn.paused { animation: none; opacity: 0.75; }
+
+  /* ─── CINEMATIC INTRO ─── */
+  #intro {
+    position: fixed; inset: 0; z-index: 9999;
+    background: linear-gradient(160deg, #3d0f1e 0%, #5a1a2e 35%, #3a1020 65%, #2a0c18 100%);
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    text-align: center; overflow: hidden;
+    transition: opacity 1.2s ease;
+    padding: 20px;
+  }
+  #intro.hide { opacity: 0; pointer-events: none; }
+
+  #fireworks-canvas {
+    position: absolute; inset: 0; width: 100%; height: 100%;
+    pointer-events: none;
+  }
+
+  .intro-content {
+    position: relative; z-index: 2;
+    display: flex; flex-direction: column;
+    align-items: center; gap: 6px;
+  }
+
+  /* SVG Cake */
+  #cake-svg { width: 200px; height: 180px; filter: drop-shadow(0 0 18px rgba(232,99,122,0.6)); animation: cakeFloat 3s ease-in-out infinite; }
+  @keyframes cakeFloat { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
+
+  /* Candles on cake — real SVG flames */
+  .svg-flame { animation: flameDance 0.4s ease-in-out infinite alternate; transform-origin: 50% 100%; }
+  .svg-flame:nth-child(2) { animation-delay: 0.1s; }
+  .svg-flame:nth-child(3) { animation-delay: 0.2s; }
+  .svg-flame:nth-child(4) { animation-delay: 0.05s; }
+  .svg-flame:nth-child(5) { animation-delay: 0.15s; }
+  .svg-flame:nth-child(6) { animation-delay: 0.25s; }
+  @keyframes flameDance { from{transform:scaleX(1) scaleY(1) rotate(-3deg)} to{transform:scaleX(0.85) scaleY(1.15) rotate(3deg)} }
+
+  .candle-flame { transition: opacity 0.5s ease, transform 0.5s ease; transform-origin: 50% 100%; }
+  .candle-flame.out { opacity: 0; transform: scaleY(0); }
+  .smoke-puff { opacity: 0; }
+  .smoke-puff.show { animation: smokeRise 1.2s ease forwards; }
+  @keyframes smokeRise { 0%{opacity:0.8;transform:translateY(0) scale(0.5)} 100%{opacity:0;transform:translateY(-30px) scale(2)} }
+
+  /* Countdown */
+  .intro-tag {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.9rem; color: #f7c5ce; letter-spacing: 3px;
+    font-style: italic;
+    margin-bottom: 4px;
+    animation: fadeSlideUp 0.8s ease both;
+  }
+  @keyframes fadeSlideUp { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
+
+  #countNum {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(3.2rem, 10vw, 5.5rem);
+    font-weight: 400; font-style: italic; color: #fff; line-height: 1;
+    text-shadow: 0 0 30px rgba(232,99,122,1), 0 0 80px rgba(232,99,122,0.5), 0 0 120px rgba(201,149,74,0.4);
+    transition: transform 0.1s;
+  }
+  #countNum.pop { animation: bigPop 0.4s cubic-bezier(.36,1.8,.64,1) both; }
+  @keyframes bigPop { 0%{transform:scale(0.1);opacity:0} 100%{transform:scale(1);opacity:1} }
+
+  #countLabel {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.85rem; color: rgba(247,197,206,0.65);
+    letter-spacing: 3px; text-transform: uppercase; margin-top: 2px;
+  }
+
+  /* Open button */
+  #openBtn {
+    display: none;
+    margin-top: 18px;
+    padding: 16px 44px;
+    background: linear-gradient(135deg, #e8637a, #c9954a);
+    color: white; border: none; border-radius: 50px;
+    font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; font-style: italic;
+    cursor: pointer;
+    box-shadow: 0 0 30px rgba(232,99,122,0.6), 0 0 60px rgba(232,99,122,0.2);
+    animation: btnPulse 1.6s infinite;
+    letter-spacing: 1px;
+  }
+  #openBtn.show { display: inline-block; }
+  @keyframes btnPulse {
+    0%,100%{ box-shadow: 0 0 24px rgba(232,99,122,0.5), 0 0 50px rgba(232,99,122,0.2); transform: scale(1); }
+    50%    { box-shadow: 0 0 40px rgba(232,99,122,0.9), 0 0 90px rgba(232,99,122,0.4); transform: scale(1.04); }
+  }
+
+  /* Heart particles */
+  .heart-particle {
+    position: fixed; pointer-events: none; z-index: 10001;
+    font-size: 1.6rem; animation: heartFloat 2s ease forwards;
+  }
+  @keyframes heartFloat {
+    0%   { opacity:1; transform: translate(0,0) scale(0.5) rotate(0deg); }
+    100% { opacity:0; transform: translate(var(--hx), var(--hy)) scale(1.4) rotate(var(--hr)); }
+  }
+
   @media (max-width: 600px) {
     .gallery-grid { grid-template-columns: repeat(2, 1fr); }
     .gallery-item:nth-child(1),
@@ -528,6 +695,189 @@
 </style>
 </head>
 <body>
+
+<!-- ══ CINEMATIC INTRO ══ -->
+<div id="intro">
+  <canvas id="fireworks-canvas"></canvas>
+  <div class="intro-content">
+    <div class="intro-tag">🌸 A surprise is waiting for you 🌸</div>
+
+    <!-- SVG Birthday Cake — 3D Realistic with gradients & depth -->
+    <svg id="cake-svg" viewBox="0 0 220 200" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="bot-side" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#f2748a"/>
+          <stop offset="100%" stop-color="#a82e45"/>
+        </linearGradient>
+        <linearGradient id="bot-face" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stop-color="#f9aab8"/>
+          <stop offset="70%" stop-color="#f2748a"/>
+          <stop offset="100%" stop-color="#c0405a"/>
+        </linearGradient>
+        <linearGradient id="mid-side" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#e0b05a"/>
+          <stop offset="100%" stop-color="#7a4e10"/>
+        </linearGradient>
+        <linearGradient id="mid-face" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stop-color="#f5d98a"/>
+          <stop offset="70%" stop-color="#d4a24e"/>
+          <stop offset="100%" stop-color="#9a6520"/>
+        </linearGradient>
+        <linearGradient id="top-side" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#f2748a"/>
+          <stop offset="100%" stop-color="#a82e45"/>
+        </linearGradient>
+        <linearGradient id="top-face" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stop-color="#ffd6e0"/>
+          <stop offset="70%" stop-color="#f2748a"/>
+          <stop offset="100%" stop-color="#c0405a"/>
+        </linearGradient>
+        <radialGradient id="top-ellipse-bot" cx="45%" cy="45%" r="55%">
+          <stop offset="0%" stop-color="#ffd6e0"/>
+          <stop offset="100%" stop-color="#e8637a"/>
+        </radialGradient>
+        <radialGradient id="mid-ellipse-top" cx="45%" cy="45%" r="55%">
+          <stop offset="0%" stop-color="#f5d98a"/>
+          <stop offset="100%" stop-color="#c9954a"/>
+        </radialGradient>
+        <radialGradient id="bot-ellipse-top" cx="45%" cy="45%" r="55%">
+          <stop offset="0%" stop-color="#ffc0cc"/>
+          <stop offset="100%" stop-color="#e8637a"/>
+        </radialGradient>
+        <filter id="glow" x="-40%" y="-40%" width="180%" height="180%">
+          <feGaussianBlur stdDeviation="2.5" result="blur"/>
+          <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+        <filter id="softglow" x="-20%" y="-20%" width="140%" height="140%">
+          <feGaussianBlur stdDeviation="1.2" result="blur"/>
+          <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+      </defs>
+
+      <!-- Drop shadow -->
+      <ellipse cx="110" cy="183" rx="80" ry="9" fill="#000" opacity="0.35"/>
+
+      <!-- ══ BOTTOM LAYER ══ -->
+      <!-- Side cylinder -->
+      <rect x="18" y="130" width="164" height="46" rx="3" fill="url(#bot-side)"/>
+      <!-- Right dark edge (depth) -->
+      <rect x="164" y="130" width="18" height="46" rx="0" fill="#7a1a30" opacity="0.55" style="border-radius:0 3px 3px 0"/>
+      <!-- Bottom ellipse -->
+      <ellipse cx="100" cy="176" rx="82" ry="10" fill="#a82e45"/>
+      <!-- Top face ellipse -->
+      <ellipse cx="100" cy="130" rx="82" ry="11" fill="url(#bot-ellipse-top)"/>
+      <!-- Cream frosting border on top -->
+      <ellipse cx="100" cy="130" rx="82" ry="11" fill="none" stroke="#fff8f0" stroke-width="5" opacity="0.88"/>
+      <!-- Frosting drips flowing down -->
+      <path d="M32,130 C31,142 30,152 29,160"  stroke="#fff8f0" stroke-width="5.5" fill="none" stroke-linecap="round" opacity="0.82"/>
+      <path d="M55,131 C54,144 53,155 52,163"  stroke="#fff8f0" stroke-width="5"   fill="none" stroke-linecap="round" opacity="0.78"/>
+      <path d="M80,131 C79,143 78,153 77,161"  stroke="#fff8f0" stroke-width="5"   fill="none" stroke-linecap="round" opacity="0.75"/>
+      <path d="M110,131 C109,143 108,154 107,162" stroke="#fff8f0" stroke-width="5" fill="none" stroke-linecap="round" opacity="0.78"/>
+      <path d="M140,130 C139,142 138,152 137,160" stroke="#fff8f0" stroke-width="5" fill="none" stroke-linecap="round" opacity="0.75"/>
+      <path d="M162,130 C161,140 160,149 159,155" stroke="#fff8f0" stroke-width="5" fill="none" stroke-linecap="round" opacity="0.65"/>
+      <!-- Sprinkles bottom layer -->
+      <rect x="42"  y="145" width="10" height="3.5" rx="1.8" fill="#ffd700" opacity="0.9" transform="rotate(28,47,147)"/>
+      <rect x="70"  y="152" width="10" height="3.5" rx="1.8" fill="#fff"    opacity="0.85" transform="rotate(-18,75,154)"/>
+      <rect x="98"  y="146" width="10" height="3.5" rx="1.8" fill="#ffd700" opacity="0.9" transform="rotate(42,103,148)"/>
+      <rect x="126" y="153" width="10" height="3.5" rx="1.8" fill="#fff"    opacity="0.85" transform="rotate(-28,131,155)"/>
+      <rect x="150" y="144" width="10" height="3.5" rx="1.8" fill="#ffd700" opacity="0.8" transform="rotate(12,155,146)"/>
+      <!-- "Dr. Arati" text on bottom layer -->
+      <text x="100" y="162" font-size="13" font-family="Georgia,serif" font-style="italic" font-weight="bold"
+            text-anchor="middle" fill="white" opacity="0.95" filter="url(#softglow)">🩺 Dr. Arati 🩺</text>
+
+      <!-- ══ MIDDLE LAYER ══ -->
+      <rect x="34" y="94" width="132" height="40" rx="3" fill="url(#mid-side)"/>
+      <rect x="148" y="94" width="18" height="40" rx="0" fill="#5a3500" opacity="0.45" style="border-radius:0 3px 3px 0"/>
+      <ellipse cx="100" cy="134" rx="66" ry="9" fill="#9a6520"/>
+      <ellipse cx="100" cy="94"  rx="66" ry="9" fill="url(#mid-ellipse-top)"/>
+      <ellipse cx="100" cy="94"  rx="66" ry="9" fill="none" stroke="#fff8f0" stroke-width="4.5" opacity="0.85"/>
+      <!-- Drips middle -->
+      <path d="M44,94  C43,105 42,113 41,120"  stroke="#fff8f0" stroke-width="4.5" fill="none" stroke-linecap="round" opacity="0.78"/>
+      <path d="M68,95  C67,106 66,115 65,122"  stroke="#fff8f0" stroke-width="4.5" fill="none" stroke-linecap="round" opacity="0.75"/>
+      <path d="M96,95  C95,106 94,115 93,122"  stroke="#fff8f0" stroke-width="4.5" fill="none" stroke-linecap="round" opacity="0.73"/>
+      <path d="M124,94 C123,105 122,113 121,120" stroke="#fff8f0" stroke-width="4.5" fill="none" stroke-linecap="round" opacity="0.7"/>
+      <path d="M148,94 C147,103 146,111 145,117" stroke="#fff8f0" stroke-width="4.5" fill="none" stroke-linecap="round" opacity="0.6"/>
+      <!-- Dots middle -->
+      <circle cx="54"  cy="112" r="3.5" fill="#ffd700" opacity="0.85"/>
+      <circle cx="80"  cy="118" r="3"   fill="#fff"    opacity="0.8"/>
+      <circle cx="108" cy="112" r="3.5" fill="#ffd700" opacity="0.85"/>
+      <circle cx="134" cy="117" r="3"   fill="#fff"    opacity="0.8"/>
+
+      <!-- ══ TOP LAYER ══ -->
+      <rect x="52" y="62" width="96" height="36" rx="3" fill="url(#top-side)"/>
+      <rect x="130" y="62" width="18" height="36" rx="0" fill="#7a1a30" opacity="0.45" style="border-radius:0 3px 3px 0"/>
+      <ellipse cx="100" cy="98"  rx="48" ry="7.5" fill="#a82e45"/>
+      <ellipse cx="100" cy="62"  rx="48" ry="8"   fill="url(#top-ellipse-bot)"/>
+      <ellipse cx="100" cy="62"  rx="48" ry="8"   fill="none" stroke="#fff8f0" stroke-width="4" opacity="0.88"/>
+      <!-- Drips top -->
+      <path d="M61,62  C60,71 59,79 58,85"   stroke="#fff8f0" stroke-width="4" fill="none" stroke-linecap="round" opacity="0.82"/>
+      <path d="M84,63  C83,72 82,80 81,86"   stroke="#fff8f0" stroke-width="4" fill="none" stroke-linecap="round" opacity="0.78"/>
+      <path d="M110,63 C109,72 108,80 107,86" stroke="#fff8f0" stroke-width="4" fill="none" stroke-linecap="round" opacity="0.75"/>
+      <path d="M130,62 C129,70 128,77 127,82" stroke="#fff8f0" stroke-width="4" fill="none" stroke-linecap="round" opacity="0.65"/>
+      <!-- Little heart top -->
+      <text x="100" y="83" font-size="11" text-anchor="middle" opacity="0.9">💕</text>
+
+      <!-- Candle flame glow on top surface -->
+      <ellipse cx="100" cy="62" rx="46" ry="8" fill="#ffd700" opacity="0.07"/>
+
+      <!-- ══ CANDLES (6) ══ -->
+      <!-- Candle 1 -->
+      <rect x="62" y="41" width="8" height="23" rx="3.5" fill="#ffd6e0"/>
+      <rect x="63" y="41" width="2.5" height="23" rx="1" fill="#fff" opacity="0.45"/>
+      <g class="candle-flame" id="flame-1" filter="url(#glow)">
+        <ellipse cx="66" cy="35.5" rx="4.5" ry="7" fill="#ffc200" opacity="0.95"/>
+        <ellipse cx="66" cy="34.5" rx="2.8" ry="5" fill="#fff27a" opacity="0.85"/>
+        <ellipse cx="66" cy="40"   rx="1.8" ry="2" fill="#ff4500" opacity="0.9"/>
+      </g>
+      <!-- Candle 2 -->
+      <rect x="75" y="39" width="8" height="25" rx="3.5" fill="#c9954a"/>
+      <rect x="76" y="39" width="2.5" height="25" rx="1" fill="#fff" opacity="0.38"/>
+      <g class="candle-flame" id="flame-2" filter="url(#glow)">
+        <ellipse cx="79" cy="33.5" rx="4.5" ry="7" fill="#ff9500" opacity="0.95"/>
+        <ellipse cx="79" cy="32.5" rx="2.8" ry="5" fill="#ffe066" opacity="0.85"/>
+        <ellipse cx="79" cy="38"   rx="1.8" ry="2" fill="#ff3d00" opacity="0.9"/>
+      </g>
+      <!-- Candle 3 -->
+      <rect x="88" y="40" width="8" height="24" rx="3.5" fill="#f7c5ce"/>
+      <rect x="89" y="40" width="2.5" height="24" rx="1" fill="#fff" opacity="0.45"/>
+      <g class="candle-flame" id="flame-3" filter="url(#glow)">
+        <ellipse cx="92" cy="34.5" rx="4.5" ry="7" fill="#ffc200" opacity="0.95"/>
+        <ellipse cx="92" cy="33.5" rx="2.8" ry="5" fill="#fff27a" opacity="0.85"/>
+        <ellipse cx="92" cy="39"   rx="1.8" ry="2" fill="#ff4500" opacity="0.9"/>
+      </g>
+      <!-- Candle 4 -->
+      <rect x="104" y="40" width="8" height="24" rx="3.5" fill="#ffd6e0"/>
+      <rect x="105" y="40" width="2.5" height="24" rx="1" fill="#fff" opacity="0.45"/>
+      <g class="candle-flame" id="flame-4" filter="url(#glow)">
+        <ellipse cx="108" cy="34.5" rx="4.5" ry="7" fill="#ff9500" opacity="0.95"/>
+        <ellipse cx="108" cy="33.5" rx="2.8" ry="5" fill="#ffe066" opacity="0.85"/>
+        <ellipse cx="108" cy="39"   rx="1.8" ry="2" fill="#ff3d00" opacity="0.9"/>
+      </g>
+      <!-- Candle 5 -->
+      <rect x="117" y="39" width="8" height="25" rx="3.5" fill="#c9954a"/>
+      <rect x="118" y="39" width="2.5" height="25" rx="1" fill="#fff" opacity="0.38"/>
+      <g class="candle-flame" id="flame-5" filter="url(#glow)">
+        <ellipse cx="121" cy="33.5" rx="4.5" ry="7" fill="#ffc200" opacity="0.95"/>
+        <ellipse cx="121" cy="32.5" rx="2.8" ry="5" fill="#fff27a" opacity="0.85"/>
+        <ellipse cx="121" cy="38"   rx="1.8" ry="2" fill="#ff4500" opacity="0.9"/>
+      </g>
+      <!-- Candle 6 -->
+      <rect x="130" y="41" width="8" height="23" rx="3.5" fill="#f7c5ce"/>
+      <rect x="131" y="41" width="2.5" height="23" rx="1" fill="#fff" opacity="0.45"/>
+      <g class="candle-flame" id="flame-6" filter="url(#glow)">
+        <ellipse cx="134" cy="35.5" rx="4.5" ry="7" fill="#ff9500" opacity="0.95"/>
+        <ellipse cx="134" cy="34.5" rx="2.8" ry="5" fill="#ffe066" opacity="0.85"/>
+        <ellipse cx="134" cy="40"   rx="1.8" ry="2" fill="#ff3d00" opacity="0.9"/>
+      </g>
+    </svg>
+
+
+    <div id="countNum" class="pop">6</div>
+    <div id="countLabel">✦ counting down for you ✦</div>
+    <div id="introWish" style="display:none; font-family:'Playfair Display',serif; font-size:clamp(1.1rem,3.5vw,1.6rem); font-weight:700; color:#fdf6f0; text-shadow:0 0 20px rgba(232,99,122,0.8); margin-top:8px; line-height:1.3; letter-spacing:0.5px;">Happy Birthday,<br><em style="color:#f7c5ce; font-style:italic;">Doctor 🩺</em></div>
+    <button id="openBtn" onclick="revealPage()">💖 Open Your Birthday Surprise 🌸</button>
+  </div>
+</div>
 
 <!-- Floating Petals -->
 <div class="petals-bg" id="petals"></div>
@@ -735,18 +1085,24 @@
 
 <!-- WISH -->
 <section id="wish">
+  <canvas id="wish-canvas"></canvas>
   <div class="section-inner">
     <span class="section-label reveal">✦ With all my heart ✦</span>
     <div class="candle-row reveal">🕯️🎂🕯️</div>
     <div class="wish-big reveal">
-      Happy Birthday,<br><em>my Mental 🥹</em>
+      Happy Birthday,<br><em>Doctor Arati 🩺</em>
     </div>
     <p class="wish-msg reveal">
-      May this year bring you joy, laughter, good health, and all the success your beautiful heart deserves. Smile big today — because you made someone's whole world smile just by existing.
+      May this year bring you joy, laughter, good health, and all the success your beautiful heart deserves. The world is waiting for Dr. Arati — and so am I. 🥹
     </p>
     <p class="from-gann reveal">With love, always — your Gann 💖</p>
   </div>
 </section>
+
+<!-- Floating Music Button -->
+<div id="musicBtn" onclick="toggleMusic()" title="Play Music">
+  <span id="musicIcon">🎵</span>
+</div>
 
 <!-- LIGHTBOX -->
 <div id="lightbox" onclick="closeLightbox()">
@@ -789,7 +1145,284 @@
     }
   });
 
-  // ─── LIGHTBOX ───
+  // ─── HAPPY BIRTHDAY — Rich Guitar + Warm Bass + Shimmer ───
+  let audioCtx = null;
+  let playing = false;
+  let scheduledNodes = [];
+  let loopTimeout = null;
+
+  const btn  = document.getElementById('musicBtn');
+  const icon = document.getElementById('musicIcon');
+
+  // Happy Birthday in G major — relaxed fingerpicked feel
+  const BEAT = 0.60;
+
+  // Melody [freq, dur_beats, delay_beats]
+  const bdayNotes = [
+    // "Happy Birthday to You"
+    [392.00, 0.7,  0.0],
+    [392.00, 0.3,  0.78],
+    [440.00, 1.05, 1.10],
+    [392.00, 1.05, 2.20],
+    [523.25, 1.15, 3.30],
+    [493.88, 2.40, 4.50],
+    // "Happy Birthday to You"
+    [392.00, 0.7,  7.20],
+    [392.00, 0.3,  8.00],
+    [440.00, 1.05, 8.35],
+    [392.00, 1.05, 9.45],
+    [587.33, 1.15, 10.55],
+    [523.25, 2.60, 11.75],
+    // "Happy Birthday dear Doctor"
+    [392.00, 0.7,  14.70],
+    [392.00, 0.3,  15.50],
+    [783.99, 1.05, 15.85],
+    [659.25, 1.05, 16.95],
+    [523.25, 0.75, 18.05],
+    [493.88, 0.75, 18.85],
+    [440.00, 1.90, 19.65],
+    // "Happy Birthday to You"
+    [698.46, 0.7,  22.00],
+    [698.46, 0.3,  22.80],
+    [659.25, 1.05, 23.15],
+    [523.25, 1.05, 24.25],
+    [587.33, 1.05, 25.35],
+    [523.25, 3.80, 26.45],
+  ];
+
+  // Fingerpicked chord arpeggios — G major feel
+  const arpeggios = [
+    // G (G3 B3 D4)
+    [196.00,0.00],[246.94,0.18],[293.66,0.36],
+    [196.00,1.10],[246.94,1.28],[293.66,1.46],
+    [196.00,2.20],[246.94,2.38],[293.66,2.56],
+    [196.00,3.30],[246.94,3.48],[293.66,3.66],
+    // C (C3 E3 G3)
+    [130.81,4.50],[164.81,4.68],[196.00,4.86],
+    [130.81,5.60],[164.81,5.78],[196.00,5.96],
+    [130.81,6.40],[164.81,6.58],[196.00,6.76],
+    // G
+    [196.00,7.20],[246.94,7.38],[293.66,7.56],
+    [196.00,8.35],[246.94,8.53],[293.66,8.71],
+    [196.00,9.45],[246.94,9.63],[293.66,9.81],
+    // D (D3 F#3 A3)
+    [146.83,10.55],[184.99,10.73],[220.00,10.91],
+    [146.83,11.75],[184.99,11.93],[220.00,12.11],
+    [146.83,13.00],[184.99,13.18],[220.00,13.36],
+    // G
+    [196.00,14.70],[246.94,14.88],[293.66,15.06],
+    [196.00,15.85],[246.94,16.03],[293.66,16.21],
+    // C
+    [130.81,18.05],[164.81,18.23],[196.00,18.41],
+    [130.81,19.15],[164.81,19.33],[196.00,19.51],
+    // G
+    [196.00,22.00],[246.94,22.18],[293.66,22.36],
+    // D
+    [146.83,23.15],[184.99,23.33],[220.00,23.51],
+    [146.83,24.25],[184.99,24.43],[220.00,24.61],
+    // G final
+    [196.00,26.45],[246.94,26.63],[293.66,26.81],
+    [196.00,27.55],[246.94,27.73],[293.66,27.91],
+    [196.00,28.65],[246.94,28.83],[293.66,29.01],
+  ];
+
+  // Bass notes — soft thumb bass on beat 1 of each chord
+  const bassLine = [
+    [98.00, 0.0], [98.00, 1.1], [98.00, 2.2], [98.00, 3.3],
+    [65.41, 4.5], [65.41, 5.6], [65.41, 6.4],
+    [98.00, 7.2], [98.00, 8.35],[98.00, 9.45],
+    [73.42, 10.55],[73.42, 11.75],[73.42, 13.0],
+    [98.00, 14.7],[98.00, 15.85],
+    [65.41, 18.05],[65.41, 19.15],
+    [98.00, 22.0],
+    [73.42, 23.15],[73.42, 24.25],
+    [98.00, 26.45],[98.00, 27.55],[98.00, 28.65],
+  ];
+
+  const LOOP_DURATION = 33;
+
+  // Warm acoustic guitar — sawtooth + harmonic + reverb tail
+  function playGuitar(ctx, masterGain, freq, startTime, durBeats, vol) {
+    const dur = durBeats * BEAT;
+    const osc1 = ctx.createOscillator();
+    const osc2 = ctx.createOscillator();
+    const osc3 = ctx.createOscillator(); // reverb tail
+    const filt = ctx.createBiquadFilter();
+    const gain = ctx.createGain();
+    const echoGain = ctx.createGain();
+
+    osc1.type = 'sawtooth';  osc1.frequency.value = freq;
+    osc2.type = 'triangle';  osc2.frequency.value = freq * 2.001;
+    osc3.type = 'sine';      osc3.frequency.value = freq * 0.999;
+
+    filt.type = 'lowpass'; filt.frequency.value = 2400; filt.Q.value = 0.7;
+
+    osc1.connect(filt); osc2.connect(filt);
+    filt.connect(gain); gain.connect(masterGain);
+    osc3.connect(echoGain); echoGain.connect(masterGain);
+
+    // Main envelope — fast attack, natural guitar decay
+    gain.gain.setValueAtTime(0, startTime);
+    gain.gain.linearRampToValueAtTime(vol, startTime + 0.010);
+    gain.gain.exponentialRampToValueAtTime(vol * 0.55, startTime + 0.07);
+    gain.gain.exponentialRampToValueAtTime(vol * 0.22, startTime + dur * 0.65);
+    gain.gain.linearRampToValueAtTime(0, startTime + dur + 0.06);
+
+    // Reverb tail — delayed sine, very soft
+    echoGain.gain.setValueAtTime(0, startTime + 0.10);
+    echoGain.gain.linearRampToValueAtTime(vol * 0.09, startTime + 0.22);
+    echoGain.gain.exponentialRampToValueAtTime(0.0001, startTime + dur + 0.55);
+
+    const t = startTime + 0.004;
+    osc1.start(t); osc2.start(t); osc3.start(t + 0.10);
+    const e = startTime + dur + 0.65;
+    osc1.stop(e); osc2.stop(e); osc3.stop(e);
+    scheduledNodes.push(osc1, osc2, osc3);
+  }
+
+  // Soft fingerpicked arpeggio
+  function playArp(ctx, masterGain, freq, startTime, vol) {
+    const osc  = ctx.createOscillator();
+    const filt = ctx.createBiquadFilter();
+    const gain = ctx.createGain();
+    osc.type = 'triangle'; osc.frequency.value = freq;
+    filt.type = 'lowpass'; filt.frequency.value = 800; filt.Q.value = 0.5;
+    osc.connect(filt); filt.connect(gain); gain.connect(masterGain);
+    gain.gain.setValueAtTime(0, startTime);
+    gain.gain.linearRampToValueAtTime(vol, startTime + 0.015);
+    gain.gain.exponentialRampToValueAtTime(vol * 0.3, startTime + 0.14);
+    gain.gain.exponentialRampToValueAtTime(0.0001, startTime + 0.85);
+    osc.start(startTime); osc.stop(startTime + 1.0);
+    scheduledNodes.push(osc);
+  }
+
+  // Warm thumb bass — deep triangle + sine
+  function playBass(ctx, masterGain, freq, startTime, vol) {
+    const osc1 = ctx.createOscillator();
+    const osc2 = ctx.createOscillator();
+    const filt = ctx.createBiquadFilter();
+    const gain = ctx.createGain();
+    osc1.type = 'triangle'; osc1.frequency.value = freq;
+    osc2.type = 'sine';     osc2.frequency.value = freq * 2;
+    filt.type = 'lowpass';  filt.frequency.value = 340; filt.Q.value = 0.6;
+    osc1.connect(filt); osc2.connect(filt); filt.connect(gain); gain.connect(masterGain);
+    gain.gain.setValueAtTime(0, startTime);
+    gain.gain.linearRampToValueAtTime(vol, startTime + 0.018);
+    gain.gain.exponentialRampToValueAtTime(vol * 0.4, startTime + 0.12);
+    gain.gain.exponentialRampToValueAtTime(0.0001, startTime + 0.95);
+    osc1.start(startTime); osc2.start(startTime);
+    osc1.stop(startTime + 1.1); osc2.stop(startTime + 1.1);
+    scheduledNodes.push(osc1, osc2);
+  }
+
+  // High shimmer — very soft sine overtone for brightness
+  function playShimmer(ctx, masterGain, freq, startTime) {
+    const osc  = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.type = 'sine'; osc.frequency.value = freq * 4;
+    osc.connect(gain); gain.connect(masterGain);
+    gain.gain.setValueAtTime(0, startTime);
+    gain.gain.linearRampToValueAtTime(0.018, startTime + 0.02);
+    gain.gain.exponentialRampToValueAtTime(0.0001, startTime + 0.5);
+    osc.start(startTime); osc.stop(startTime + 0.6);
+    scheduledNodes.push(osc);
+  }
+
+  function scheduleLoop(startTime) {
+    if (!playing) return;
+
+    const master = audioCtx.createGain();
+    master.gain.setValueAtTime(0.09, startTime);
+    master.connect(audioCtx.destination);
+
+    // Melody
+    bdayNotes.forEach(([freq, dur, delay]) => {
+      playGuitar(audioCtx, master, freq, startTime + delay * BEAT, dur, 0.70);
+      playShimmer(audioCtx, master, freq, startTime + delay * BEAT);
+    });
+
+    // Arpeggios
+    arpeggios.forEach(([freq, delay]) => {
+      playArp(audioCtx, master, freq, startTime + delay * BEAT, 0.26);
+    });
+
+    // Bass
+    bassLine.forEach(([freq, delay]) => {
+      playBass(audioCtx, master, freq, startTime + delay * BEAT, 0.55);
+    });
+
+    loopTimeout = setTimeout(() => {
+      if (playing) scheduleLoop(audioCtx.currentTime + 0.05);
+    }, (LOOP_DURATION - 0.5) * 1000);
+  }
+
+  function startMusic() {
+    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    ctx = audioCtx;
+    playing = true;
+    icon.textContent = '🎵';
+    btn.classList.remove('paused');
+    scheduleLoop(audioCtx.currentTime + 0.1);
+  }
+
+  let ctx = null;
+
+  function stopMusic() {
+    playing = false;
+    clearTimeout(loopTimeout);
+    scheduledNodes.forEach(n => { try { n.stop(); } catch(e){} });
+    scheduledNodes = [];
+    if (audioCtx) { audioCtx.close(); audioCtx = null; ctx = null; }
+    icon.textContent = '🔇';
+    btn.classList.add('paused');
+  }
+
+  function toggleMusic() {
+    if (playing) { stopMusic(); }
+    else { startMusic(); }
+  }
+  // ── WISH SECTION CANVAS ANIMATION ──
+  const wishCanvas = document.getElementById('wish-canvas');
+  if(wishCanvas) {
+    const wCtx = wishCanvas.getContext('2d');
+    let wishParticles = [];
+    function resizeWish() {
+      wishCanvas.width  = wishCanvas.offsetWidth || 300;
+      wishCanvas.height = wishCanvas.offsetHeight || 400;
+    }
+    resizeWish();
+    window.addEventListener('resize', resizeWish);
+    function spawnWishParticle() {
+      const symbols = ['❤','♥','✦','·','✿','°'];
+      wishParticles.push({
+        x: Math.random() * wishCanvas.width,
+        y: wishCanvas.height + 10,
+        size: 8 + Math.random() * 14,
+        speed: 0.4 + Math.random() * 0.6,
+        drift: (Math.random() - 0.5) * 0.5,
+        alpha: 0.5 + Math.random() * 0.5,
+        color: ['#e8637a','#f7c5ce','#c9954a','#fff','#ffd6e0'][Math.floor(Math.random()*5)],
+        symbol: symbols[Math.floor(Math.random()*symbols.length)]
+      });
+    }
+    function drawWish() {
+      wCtx.clearRect(0, 0, wishCanvas.width, wishCanvas.height);
+      if(Math.random() < 0.15) spawnWishParticle();
+      wishParticles = wishParticles.filter(p => p.y > -20);
+      wishParticles.forEach(p => {
+        p.y -= p.speed; p.x += p.drift;
+        wCtx.globalAlpha = p.alpha * Math.min(1, (wishCanvas.height - p.y) / 60);
+        wCtx.fillStyle = p.color;
+        wCtx.font = p.size + 'px serif';
+        wCtx.fillText(p.symbol, p.x, p.y);
+      });
+      wCtx.globalAlpha = 1;
+      requestAnimationFrame(drawWish);
+    }
+    drawWish();
+  }
+
+  // ── LIGHTBOX ──
   function openLightbox(item) {
     const img = item.querySelector('img');
     if(!img || !img.src || img.style.display === 'none') return;
@@ -800,6 +1433,191 @@
     document.getElementById('lightbox').classList.remove('open');
   }
   document.addEventListener('keydown', e => { if(e.key === 'Escape') closeLightbox(); });
+
+  // ══ CINEMATIC INTRO ══
+  const introEl      = document.getElementById('intro');
+  const fwCanvas     = document.getElementById('fireworks-canvas');
+  const fwCtx        = fwCanvas.getContext('2d');
+  const countNumEl   = document.getElementById('countNum');
+  const countLblEl   = document.getElementById('countLabel');
+  const openBtnEl    = document.getElementById('openBtn');
+  const introWishEl  = document.getElementById('introWish');
+
+  fwCanvas.width  = window.innerWidth;
+  fwCanvas.height = window.innerHeight;
+  window.addEventListener('resize', () => {
+    fwCanvas.width  = window.innerWidth;
+    fwCanvas.height = window.innerHeight;
+  });
+
+  // ── Fireworks engine ──
+  let fwParticles = [];
+  let fwRockets   = [];
+  let fwRunning   = true;
+
+  function fwRandomColor() {
+    const cols = ['#e8637a','#f7c5ce','#c9954a','#ffd700','#fff','#ffb6c1','#ff9ecb','#ffecd2'];
+    return cols[Math.floor(Math.random()*cols.length)];
+  }
+
+  function launchRocket() {
+    fwRockets.push({
+      x: fwCanvas.width * (0.15 + Math.random()*0.7),
+      y: fwCanvas.height,
+      tx: fwCanvas.width * (0.15 + Math.random()*0.7),
+      ty: fwCanvas.height * (0.08 + Math.random()*0.42),
+      color: fwRandomColor(),
+      trail: [],
+      speed: 7 + Math.random()*5
+    });
+  }
+
+  function fwExplode(x, y, color) {
+    for(let i = 0; i < 90; i++){
+      const angle = (Math.PI*2/90)*i + (Math.random()-0.5)*0.3;
+      const speed = 1.5 + Math.random()*5;
+      fwParticles.push({
+        x, y,
+        vx: Math.cos(angle)*speed,
+        vy: Math.sin(angle)*speed,
+        alpha: 1, color,
+        size: 2 + Math.random()*2.5,
+        decay: 0.013 + Math.random()*0.016,
+        gravity: 0.055
+      });
+    }
+    for(let i = 0; i < 16; i++){
+      const angle = (Math.PI*2/16)*i;
+      fwParticles.push({ x, y, vx: Math.cos(angle)*10, vy: Math.sin(angle)*10,
+        alpha:1, color:'#fff', size:1.5, decay:0.045, gravity:0 });
+    }
+  }
+
+  function drawFW() {
+    if(!fwRunning) return;
+    fwCtx.fillStyle = 'rgba(58,16,32,0.20)';
+    fwCtx.fillRect(0, 0, fwCanvas.width, fwCanvas.height);
+
+    fwRockets = fwRockets.filter(r => {
+      r.trail.push({x:r.x, y:r.y});
+      if(r.trail.length > 12) r.trail.shift();
+      const dx = r.tx-r.x, dy = r.ty-r.y;
+      const dist = Math.sqrt(dx*dx+dy*dy);
+      if(dist < r.speed+2){ fwExplode(r.x, r.y, r.color); return false; }
+      r.x += (dx/dist)*r.speed; r.y += (dy/dist)*r.speed;
+      r.trail.forEach((p,i) => {
+        fwCtx.beginPath();
+        fwCtx.arc(p.x, p.y, 2*(i/r.trail.length), 0, Math.PI*2);
+        fwCtx.fillStyle = r.color;
+        fwCtx.globalAlpha = (i/r.trail.length)*0.7;
+        fwCtx.fill();
+      });
+      fwCtx.globalAlpha = 1;
+      fwCtx.beginPath(); fwCtx.arc(r.x, r.y, 3, 0, Math.PI*2);
+      fwCtx.fillStyle = '#fff'; fwCtx.fill();
+      return true;
+    });
+
+    fwParticles = fwParticles.filter(p => {
+      p.x += p.vx; p.y += p.vy; p.vy += p.gravity;
+      p.vx *= 0.97; p.vy *= 0.97; p.alpha -= p.decay;
+      if(p.alpha <= 0) return false;
+      fwCtx.beginPath(); fwCtx.arc(p.x, p.y, p.size, 0, Math.PI*2);
+      fwCtx.fillStyle = p.color; fwCtx.globalAlpha = p.alpha; fwCtx.fill();
+      fwCtx.globalAlpha = 1;
+      return true;
+    });
+    requestAnimationFrame(drawFW);
+  }
+
+  let rocketTimer = setInterval(() => {
+    if(fwRunning){ launchRocket(); if(Math.random()>0.5) launchRocket(); }
+  }, 750);
+  drawFW();
+
+  // ── Countdown ──
+  let count = 6;
+
+  function extinguishFlame(num) {
+    const flame = document.getElementById('flame-' + num);
+    if(flame){
+      flame.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+      flame.style.opacity = '0';
+      flame.style.transform = 'scaleY(0) translateY(5px)';
+    }
+  }
+
+  function animateCount() {
+    countNumEl.classList.remove('pop');
+    void countNumEl.offsetWidth;
+    countNumEl.classList.add('pop');
+  }
+
+  extinguishFlame(count);
+
+  const countTimer = setInterval(() => {
+    count--;
+    if(count <= 0){
+      clearInterval(countTimer);
+      for(let i=1; i<=6; i++) extinguishFlame(i);
+      countNumEl.style.fontSize = '1.4rem';
+      countNumEl.style.textShadow = 'none';
+      countNumEl.textContent = '🎆 All wishes come true today! 🎆';
+      countLblEl.style.display = 'none';
+      for(let i=0; i<6; i++) setTimeout(launchRocket, i*120);
+      setTimeout(() => {
+        countNumEl.style.display = 'none';
+        if(introWishEl) { introWishEl.style.display = 'block'; }
+        openBtnEl.classList.add('show');
+      }, 1000);
+      return;
+    }
+    countNumEl.textContent = count;
+    animateCount();
+    extinguishFlame(count);
+    launchRocket();
+  }, 1100);
+
+  // ── Heart particles on button hover ──
+  openBtnEl.addEventListener('mousemove', (e) => {
+    if(Math.random()>0.6) spawnHeart(e.clientX, e.clientY);
+  });
+  openBtnEl.addEventListener('touchmove', (e) => {
+    spawnHeart(e.touches[0].clientX, e.touches[0].clientY);
+  });
+
+  function spawnHeart(x, y) {
+    const h = document.createElement('div');
+    h.className = 'heart-particle';
+    h.textContent = ['💖','🌸','✨','💕','🌺'][Math.floor(Math.random()*5)];
+    const hx = (Math.random()-0.5)*140;
+    const hy = -(60+Math.random()*100);
+    const hr = (Math.random()-0.5)*360+'deg';
+    h.style.cssText = `left:${x}px;top:${y}px;--hx:${hx}px;--hy:${hy}px;--hr:${hr}`;
+    document.body.appendChild(h);
+    setTimeout(() => h.remove(), 2000);
+  }
+
+  // ── Reveal ──
+  function revealPage() {
+    for(let i=0; i<10; i++) setTimeout(launchRocket, i*80);
+    for(let i=0; i<25; i++){
+      setTimeout(() => {
+        spawnHeart(
+          fwCanvas.width*(0.1+Math.random()*0.8),
+          fwCanvas.height*(0.3+Math.random()*0.5)
+        );
+      }, i*60);
+    }
+    setTimeout(() => {
+      fwRunning = false;
+      clearInterval(rocketTimer);
+      fwCtx.clearRect(0,0,fwCanvas.width,fwCanvas.height);
+      introEl.classList.add('hide');
+      setTimeout(() => { introEl.style.display='none'; }, 1250);
+      if(!playing) startMusic();
+    }, 900);
+  }
 </script>
 </body>
-</html>
+    </html>
